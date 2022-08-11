@@ -31,4 +31,9 @@ export class CreateProductDto {
     @IsIn([ 'men', 'women', 'kid', 'unisex']) // Me tiene que enviar algún valor que esté aquí
     gender: string;
 
+    @IsString({ each: true }) // Cada elemento del array tiene que cumplir la condición
+    @IsArray()
+    @IsOptional()
+    tags: string[];
+
 }
