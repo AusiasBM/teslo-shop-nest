@@ -12,8 +12,15 @@
 ```
 docker-compose up -d
 ```
-6. Levantar la base de datos
+
+6. Ejecutar SEED ( Esto rellena la BBDD con información predeterminada )
 ```
-docker-compose up -d
+http://localhost:3000/api/seed
+```
+
+
+7. Levantar el proyecto en desarrollo
+```
+yarn start:dev
 ```
  

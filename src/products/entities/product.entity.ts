@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProductImage } from "./product-image.entity";
 
-@Entity()
+@Entity({ name: 'products' }) // Esto pone un nombre específico a la tabla en la BBDD
 export class Product {
 
     @PrimaryGeneratedColumn('uuid')
@@ -46,10 +47,15 @@ export class Product {
     })
     tags: string[];
 
-
-
-
-    // TODO Images
+    @OneToMany( // En este paso estamos haciendo una relación de 1 a muchos, ya que un producto puede tener muchas imágenes.
+        () => ProductImage,
+        (productImage) => productImage.product,
+        { 
+            cascade: true,
+            eager: true // Cada vez que utilicemos cualquier método find* va ha cargar todas las relaciones
+        }
+    )
+    images?: ProductImage[];
 
     @BeforeInsert()
     checkSlugInsert(){
