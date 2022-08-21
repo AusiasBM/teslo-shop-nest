@@ -24,3 +24,19 @@ http://localhost:3000/api/seed
 yarn start:dev
 ```
  
+
+
+En que
+dinero
+fecha
+sitio
+categoria
+  - Casa
+  - Comida
+  - Entretenimiento
+comentario
+tipo de gasto
+  - Me debe
+  - le debo
+  - gasto
+  - beneficio
