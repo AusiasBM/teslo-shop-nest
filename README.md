@@ -6,37 +6,22 @@
 
 1. Clonar proyecto
 2. ```yarn install```
-3. Clonar el archivo ```.env.template```y renombrarlo a ```.env```
+3. Clonar el archivo ```.env.template``` y renombrarlo a ```.env```
 4. Cambiar las variables de entorno
 5. Levantar la base de datos
 ```
 docker-compose up -d
 ```
 
-6. Ejecutar SEED ( Esto rellena la BBDD con información predeterminada )
+6. Levantar el proyecto en desarrollo
+```
+yarn start:dev
+```
+
+7. Ejecutar SEED ( Esto rellena la BBDD con información predeterminada )
 ```
 http://localhost:3000/api/seed
 ```
 
 
-7. Levantar el proyecto en desarrollo
-```
-yarn start:dev
-```
- 
 
-
-En que
-dinero
-fecha
-sitio
-categoria
-  - Casa
-  - Comida
-  - Entretenimiento
-comentario
-tipo de gasto
-  - Me debe
-  - le debo
-  - gasto
-  - beneficio

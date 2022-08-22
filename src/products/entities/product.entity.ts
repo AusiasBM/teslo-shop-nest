@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { ProductImage } from "./product-image.entity";
+import { User } from '../../auth/entities/user.entity';
 
 @Entity({ name: 'products' }) // Esto pone un nombre específico a la tabla en la BBDD
 export class Product {
@@ -56,6 +57,13 @@ export class Product {
         }
     )
     images?: ProductImage[];
+
+    @ManyToOne(
+        () => User,
+        ( user ) => user.product,
+        { eager: true } // Le decimos que carge automáticamente esta relación
+    )
+    user: User
 
     @BeforeInsert()
     checkSlugInsert(){

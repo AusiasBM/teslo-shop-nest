@@ -6,6 +6,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { isUUID } from 'class-validator';
 import { Product, ProductImage } from './entities';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -24,7 +25,7 @@ export class ProductsService {
   ){}
   
   
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto, user: User) {
     
     try {
 
@@ -36,7 +37,8 @@ export class ProductsService {
       // Estamos creando un producto, pero a la vez estamos creando las imágenes de ese producto.
       const product = this.productRepository.create({
         ...productDetails,
-        images: images.map( image => this.productImageRepository.create({ url: image }) ) // utilizamos la función map para que recorra el array de imágenes que recibimos y cree las imágenes.
+        images: images.map( image => this.productImageRepository.create({ url: image }) ), // utilizamos la función map para que recorra el array de imágenes que recibimos y cree las imágenes.
+        user,
       }); // Esto solo crea la instancia del producto ( es síncrono )
       await this.productRepository.save( product );
 
@@ -100,7 +102,7 @@ export class ProductsService {
 
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto, user: User) {
 
     const { images, ...toUpdate } = updateProductDto;
 
@@ -125,6 +127,8 @@ export class ProductsService {
           product.images = images.map( image => this.productImageRepository.create({ url: image }) 
         )
       }
+
+      product.user = user;
 
       await queryRunner.manager.save( product );
       //await this.productRepository.save( product );
