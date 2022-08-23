@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Query } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -6,7 +7,9 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { Auth, GetUser } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
 import { User } from '../auth/entities/user.entity';
+import { Product } from './entities/product.entity';
 
+@ApiTags('Products') // Esto es para que aparezca en la documentación de swagger
 @Controller('products')
 //@Auth() // Si definimos este decorador aquí le estamos diciendo que se aplica a cualquiera de estas rutas
 export class ProductsController {
@@ -14,6 +17,9 @@ export class ProductsController {
 
   @Post()
   @Auth()
+  @ApiResponse({ status: 201, description: 'The record has been successfully created.', type: Product })
+  @ApiResponse({ status: 400, description: 'Bad Request.'})
+  @ApiResponse({ status: 403, description: 'Forbidden.'})
   create(
     @Body() createProductDto: CreateProductDto,
     @GetUser() user: User,

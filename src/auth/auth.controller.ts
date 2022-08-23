@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, SetMetadata } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { Auth, GetUser, RawHeaders } from './decorators';
 import { RoleProtected } from './decorators/role-protected.decorator';
@@ -8,6 +9,7 @@ import { User } from './entities/user.entity';
 import { UserRoleGuard } from './guards/user-role.guard';
 import { ValidRoles } from './interfaces';
 
+@ApiTags('Auth') // Esto es para que aparezca en la documentación de swagger
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -74,7 +76,7 @@ export class AuthController {
   @Get('private3')
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   privateRoute3(
-    @GetUser() user: User
+    @GetUser() user: User,
   ){
 
     return {
